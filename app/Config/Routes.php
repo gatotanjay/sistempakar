@@ -13,8 +13,7 @@ $routes->get('/Daftar', 'Home::daftar');
 $routes->get('/Dashboard', 'Home::dashboard');
 $routes->get('/Gejala', 'Home::gejala');
 $routes->get('/Jenis', 'Home::jenis');
-$routes->get('/Coba', 'Home::coba');
-
+$routes->post('/hasil-solusi', 'GejalaController::hasilSolusi');
 
 
 

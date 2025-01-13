@@ -133,7 +133,7 @@
                </div>
                <div class="col-md-8 offset-md-2">
                <span class="yellow">Centang Jika Sesuai Dengan Gejala</span>
-               <form id="gejalaForm">
+               <form id="gejalaForm" action="/hasil-solusi" method="post">
                   <span class="black">Burung terlihat stres dan giras</span>
                   <div class="form-check">
                      <input class="form-check-input" type="radio" name="G01" value="ya" />
@@ -225,136 +225,13 @@
                      <input class="form-check-input" type="radio" name="G13" value="tidak"/>
                      <label class="form-check-label">Tidak</label>
                   </div>
-
-                  <button type="button" class="read_more" onclick="hitungKemiripan()">Solusi</button>
+                  <button type="submit" class="read_more">Solusi</button>
                </form>
                </div>
             </div>
          </div>
       </div>
 
-      <div class="services">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-8 offset-md-2">
-                  <span class="yellow">Solusi Perawatan</span>
-                  <h2>Hasil:</h2>
-                  <div id="output"></div><br>
-                  <h2>Solusi:</h2>
-                  <div id="solution"></div>
-               </div>
-                  
-
-                  <!-- JavaScript -->
-                  <script>
-
-                     function hitungKemiripan() {
-                        // Data kasus lama
-                        const kasus = {
-                           "Burung terkena snot": ["G03", "G05", "G06", "G09"],
-                           "Burung sedang mabung / ganti bulu": ["G02", "G03", "G06"],
-                           "Burung stress": ["G01", "G03", "G10", "G11"],
-                           "Burung cacingan": ["G03", "G05", "G06"],
-                           "Burung terkena kutu atau jamur": ["G02", "G04"],
-                           "Burung tidak memiliki mental": ["G03", "G10", "G11"],
-                           "Burung obesitas": ["G03", "G06", "G08", "G12"],
-                           "Burung over birahi": ["G07", "G13"]
-                        };
-
-                        // Solusi untuk setiap kasus
-                        const solusi = {
-                           "Burung terkena snot": "Jaga kebersihan kandang dan pakan, berikan obat tetes mata",
-                           "Burung sedang mabung / ganti bulu": "Istirahatkan burung dan beri pakan yang berkualitas",
-                           "Burung stress": "Tempatkan burung di lokasi yang tenang dan batasi interaksi dengan burung",
-                           "Burung cacingan": "Beri obat cacing dan vitamin untuk burung, berikan pakan yang berkualitas dan jaga kebersihan",
-                           "Burung terkena kutu atau jamur": "Rajin memandikan burung dan jaga kebersihan sangkar",
-                           "Burung tidak memiliki mental": "Tempatkan burung di keramaian dan lakukan pemasteran",
-                           "Burung obesitas": "Sering jemur burung dan lakukan pengumbaran di sangkar umbar",
-                           "Burung over birahi": "Lakukan terapi mandi malam dan kurangi ekstra fooding",
-                        };
-
-                        // Bobot gejala
-                        const bobotGejala = {
-                           G01: 5,
-                           G02: 3,
-                           G03: 3,
-                           G04: 1,
-                           G05: 3,
-                           G06: 5,
-                           G07: 1,
-                           G08: 3,
-                           G09: 3,
-                           G10: 3,
-                           G11: 3,
-                           G12: 3,
-                           G13: 3,
-                        };
-
-                        // Input gejala dari pengguna
-                        const kasusBaru = [];
-                        for (let i = 1; i <= 13; i++) {
-                           const input = document.querySelector(
-                              `input[name=G${i.toString().padStart(2, "0")}]:checked`
-                           );
-                           if (input && input.value === "ya") {
-                              kasusBaru.push(`G${i.toString().padStart(2, "0")}`);
-                           }
-                        }
-
-                        // Fungsi menghitung kemiripan
-                        function calculateSimilarity(kasusBaru, kasusLama) {
-                           let kemiripan = 0;
-                           let totalBobot = kasusLama.reduce(
-                              (sum, g) => sum + (bobotGejala[g] || 0),
-                              0
-                           );
-
-                           for (let gejala of kasusBaru) {
-                              if (kasusLama.includes(gejala)) {
-                              kemiripan += bobotGejala[gejala] || 0;
-                              }
-                           }
-
-                           return totalBobot > 0 ? kemiripan / totalBobot : 0;
-                        }
-
-                        // Hitung kemiripan untuk semua kasus
-                        let hasilKemiripan = Object.entries(kasus).map(([key, gejala]) => {
-                           return {
-                              kasus: key,
-                              similarity: calculateSimilarity(kasusBaru, gejala),
-                           };
-                        });
-
-                        // Urutkan berdasarkan nilai kemiripan (descending)
-                        hasilKemiripan.sort((a, b) => b.similarity - a.similarity);
-
-                        // Ambil dua nilai tertinggi dan solusi
-                        let topResults = hasilKemiripan.slice(0, 2);
-                        let topResultss = hasilKemiripan.slice(0, 1);
-
-                        let output = topResults
-                           .map(
-                              (result) =>
-                              `${result.kasus}: ${(result.similarity * 100).toFixed(2)}%`
-                           )
-                           .join("<br>");
-                        let solutions = topResultss
-                           .map(
-                              (result) => `Solusi untuk ${result.kasus}: ${solusi[result.kasus]}`
-                           )
-                           .join("<br>");
-
-                        // Tampilkan hasil dan solusi
-                        document.getElementById("output").innerHTML = output;
-                        document.getElementById("solution").innerHTML = solutions;
-                        }
-                     </script>
-               
-               </div>
-            </div>
-         </div>
-      </div>
 
       <!-- end bitcoins section -->
       <!--  footer -->
